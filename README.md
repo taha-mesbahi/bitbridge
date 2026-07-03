@@ -1,10 +1,12 @@
-# BitBridge
+# BitBridge - Open-source BitLocker for Mac Apple Silicon
 
 <p align="center">
   <img src="docs/images/bitbridge-hero.png" alt="BitBridge hero image" width="920">
 </p>
 
 **BitBridge** is an open-source Apple Silicon macOS installer that helps mount BitLocker-encrypted Windows SSDs safely from Finder.
+
+Use BitBridge when you need to **open a BitLocker drive on Mac**, **read a BitLocker SSD on MacBook Air/Pro M1, M2, M3, or M4**, or access a Windows laptop NVMe SSD from macOS without buying a commercial BitLocker reader.
 
 Open source, made by **@MESBAHI.taha**.
 
@@ -39,10 +41,19 @@ macOS login Keychain -> io.github.taha-mesbahi.bitbridge.recovery-key.<partition
 ## Requirements
 
 - Apple Silicon Mac.
-- macOS with `launchctl`, `osascript`, `security`, `diskutil`, and `hdiutil`.
+- macOS 13 Ventura or newer recommended.
+- macOS tools: `launchctl`, `osascript`, `security`, `diskutil`, `hdiutil`, `plutil`, `sudo`, `mount`, and `open`.
 - [`anylinuxfs`](https://github.com/akemin-dayo/anylinuxfs), installed in `/opt/homebrew/bin/anylinuxfs`.
 - macFUSE, if required by your `anylinuxfs` setup.
 - A valid BitLocker recovery key for the external drive.
+
+Check requirements from source:
+
+```sh
+./scripts/preflight.sh
+```
+
+The GUI installer also runs this check before installing the automount helper.
 
 ## Install From The DMG
 
@@ -80,6 +91,12 @@ The build creates:
 - `BitBridge Installer.app`
 - a macOS `.icns` app icon generated from `assets/bitbridge-icon-source.png`
 - a compressed DMG ready to upload to GitHub Releases
+
+## What BitBridge Is Not
+
+BitBridge is not a BitLocker implementation and does not replace Windows recovery tools. It is a small open-source installer around macOS, Keychain, LaunchAgent, and `anylinuxfs`.
+
+It currently focuses on safe read-only access. Write support is intentionally not enabled by default.
 
 ## Manual Commands
 

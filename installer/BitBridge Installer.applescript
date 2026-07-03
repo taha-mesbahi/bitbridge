@@ -1,20 +1,16 @@
 on run
 	set appPath to POSIX path of (path to me)
 	set resourceDir to appPath & "Contents/Resources/bitbridge/"
+	set preflightScript to resourceDir & "preflight.sh"
 	set listScript to resourceDir & "list-candidates.sh"
 	set installScript to resourceDir & "install-runtime.sh"
 	
 	display dialog "BitBridge installs a read-only automount helper for a BitLocker-encrypted external Windows SSD. Your recovery key is stored in the macOS login Keychain." buttons {"Cancel", "Continue"} default button "Continue" cancel button "Cancel" with title "BitBridge"
 	
-	if (do shell script "uname -m") is not "arm64" then
-		display alert "BitBridge" message "This installer is built for Apple Silicon Macs."
-		return
-	end if
-	
 	try
-		do shell script "test -x /opt/homebrew/bin/anylinuxfs"
-	on error
-		display alert "BitBridge needs anylinuxfs" message "Install anylinuxfs for Apple Silicon first, then run BitBridge Installer again. Expected path: /opt/homebrew/bin/anylinuxfs"
+		set preflightOutput to do shell script quoted form of preflightScript
+	on error preflightError
+		display alert "BitBridge requirements check failed" message preflightError
 		return
 	end try
 	
