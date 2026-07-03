@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://taha-mesbahi.github.io/bitbridge/sitemap.xml
